@@ -6,7 +6,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from tensorflow.keras.optimizers import SGD
 from keras import regularizers
-import my_utils
+import nn_my_utils
 import matplotlib.pyplot as plt
 import numpy as np
 import argparse
@@ -25,7 +25,7 @@ args = vars(parse_args)
 print("[INFO] 开始读取数据")
 
 # 拿到图像数据路径，方便后续读取
-imagesBatch = my_utils.readImgTrainingData(args['dataset'])
+imagesBatch = nn_my_utils.readImgTrainingData(args['dataset'])
 data = imagesBatch[b'data']  # type: np.ndarray
 labels = np.array(imagesBatch[b'labels'], dtype="uint8")  # type:np.ndarray
 

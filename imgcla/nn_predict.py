@@ -6,7 +6,7 @@ from keras import Sequential
 from keras.models import load_model
 from sklearn.preprocessing import LabelBinarizer
 
-from my_utils import readSingleImage, readImgTrainingData
+from nn_my_utils import readSingleImage, readImgTrainingData
 
 
 def readModel(modelPath: str, labelBinPath: str):
