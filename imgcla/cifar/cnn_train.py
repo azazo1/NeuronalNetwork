@@ -23,8 +23,8 @@ class SimpleCNNModel:
         self.model = Sequential()
         self.lb = LabelBinarizer()
 
-    def build11(self):
-        self.model.add(Conv2D(64, (3, 3), input_shape=(32, 32, 3), padding="same", activation="relu",
+    def buildVGG11(self, input_shape=(32, 32, 3)):
+        self.model.add(Conv2D(64, (3, 3), input_shape=input_shape, padding="same", activation="relu",
                               kernel_initializer=TruncatedNormal()))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
 
@@ -64,9 +64,9 @@ class SimpleCNNModel:
                              kernel_regularizer=regularizers.l2(0.01),
                              kernel_initializer=TruncatedNormal()))
 
-    def build19(self):
+    def buildVGG19(self, input_shape=(32, 32, 3)):
         self.model.add(Conv2D(64, (3, 3), (1, 1), "same", activation="relu", kernel_initializer=TruncatedNormal(),
-                              input_shape=(32, 32, 3)))
+                              input_shape=input_shape))
         self.model.add(Conv2D(64, (3, 3), (1, 1), "same", activation="relu", kernel_initializer=TruncatedNormal()))
         self.model.add(MaxPooling2D(pool_size=(2, 2)))
         # self.model.add(BatchNormalization())
@@ -127,7 +127,7 @@ class SimpleCNNModel:
         return self.model.evaluate(testData, testLabels, batchSize)
 
     def predict(self, data: Union[np.ndarray, list]):
-        return self.model.predict(data)
+        return self.model.predict(np.asarray(data))
 
     def save(self, path="CNNTrainedModel"):
         self.model.save(os.path.join(path, "model"))
@@ -193,7 +193,7 @@ def train():
     print("[INFO] Creating model")
     model = SimpleCNNModel()
     model.fitLabels(np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]))
-    model.build11()
+    model.buildVGG11((32, 32, 3))
     histories = []
     for seq, datasetPath in enumerate(datasetPaths):
         print(f"[INFO] Loading training dataset {seq}")
